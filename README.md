@@ -11,11 +11,13 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-Data Table package that uses builder property to only build the active rows
-at the moment. Similar to ListView.builder, it improves the performance in
-tables with many rows.
+Data Table package makes it possible to create a data table with hundreds
+of rows, which is not possible using the default ```DataTable``` widget
+because of performance reasons.
 
 ## Features
+- ScalableDataTable only builds the rows that are visible at each moment
+(similar to ListView.builder)
 - Horizontal scroll if , use the ```minWidth``` property.
 - Sticky Header: The header will be visible at all times and the rows will
 get the rest of the available space.
@@ -119,4 +121,4 @@ class UsersTable extends StatelessWidget {
 }
 ```
 
-![example gif](./assets/example.gif)
+![example gif](https://raw.githubusercontent.com/LucaDillenburg/Scalable-Data-Table/stable/assets/example.gif)
