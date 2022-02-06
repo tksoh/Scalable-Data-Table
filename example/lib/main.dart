@@ -77,8 +77,7 @@ class UsersTable extends StatelessWidget {
           final user = snapshot.data![index];
           return ScalableTableRow(
             columnWrapper: columnWrapper,
-            color: MaterialStateColor.resolveWith((states) =>
-                (index % 2 == 0) ? Colors.grey[200]! : Colors.transparent),
+            color: (index % 2 == 0) ? Colors.grey[200]! : Colors.transparent,
             children: [
               Align(
                 alignment: Alignment.centerRight,

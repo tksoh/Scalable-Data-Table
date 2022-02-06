@@ -10,12 +10,14 @@ class ScalableTableHeader extends StatelessWidget {
   final Widget Function(BuildContext, int columnIndex, Widget child)
       columnWrapper;
 
+  final double? maxWidth;
   final EdgeInsets? padding;
 
   const ScalableTableHeader({
     required this.children,
     required this.columnWrapper,
     this.padding,
+    this.maxWidth,
     Key? key,
   }) : super(key: key);
 
@@ -25,27 +27,28 @@ class ScalableTableHeader extends StatelessWidget {
       children: children,
       columnWrapper: columnWrapper,
       padding: padding,
+      maxWidth: maxWidth,
     );
   }
 }
 
 class ScalableTableRow extends StatelessWidget {
   final List<Widget> children;
-
-  final MaterialStateColor? color;
+  final Color? color;
 
   /// Use [Container] width or [Expanded] with width wrapper
   final Widget Function(BuildContext, int columnIndex, Widget child)
       columnWrapper;
 
+  final double? maxWidth;
   final Function()? onTap;
-
   final EdgeInsets? padding;
 
   const ScalableTableRow({
     required this.children,
     required this.columnWrapper,
-    required this.color,
+    this.color,
+    this.maxWidth,
     this.onTap,
     this.padding,
     Key? key,
@@ -56,11 +59,12 @@ class ScalableTableRow extends StatelessWidget {
     final child = GestureDetector(
       onTap: onTap,
       child: Container(
-        color: color ?? Colors.transparent,
+        color: color,
         child: _HorizontalTable(
           children: children,
           columnWrapper: columnWrapper,
           padding: padding,
+          maxWidth: maxWidth,
         ),
       ),
     );
@@ -80,17 +84,23 @@ class _HorizontalTable extends StatelessWidget {
   final Widget Function(BuildContext, int columnIndex, Widget child)
       columnWrapper;
 
+  final double? maxWidth;
   final EdgeInsets? padding;
 
   const _HorizontalTable({
     required this.children,
     required this.columnWrapper,
     this.padding,
+    this.maxWidth,
   });
 
   @override
   Widget build(BuildContext context) {
+    final localMaxWidth = maxWidth;
     return Container(
+      constraints: (localMaxWidth == null)
+          ? null
+          : BoxConstraints(maxWidth: localMaxWidth),
       padding: (padding ?? const EdgeInsets.symmetric(horizontal: 20)) +
           const EdgeInsets.symmetric(vertical: 4),
       child: Row(

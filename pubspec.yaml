@@ -1,6 +1,6 @@
 name: scalable_data_table
 description: Data Table package that uses builder property to only build the active rows at the moment. Similar to ListView.builder, it improves the performance in tables with many rows.
-version: 0.0.2
+version: 0.0.3
 repository: https://github.com/LucaDillenburg/Scalable-Data-Table
 
 environment:

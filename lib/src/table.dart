@@ -20,6 +20,8 @@ class ScalableDataTable extends StatelessWidget {
   /// Use -1 for loading
   final int itemCount;
 
+  final double? maxWidth;
+
   /// This will be built instead of the rows if [itemCount] is 0.
   final Widget Function(BuildContext) emptyBuilder;
 
@@ -50,6 +52,7 @@ class ScalableDataTable extends StatelessWidget {
     required this.itemCount,
     required this.emptyBuilder,
     this.rowHeight,
+    this.maxWidth,
     this.loadingBuilder,
     this.textStyle,
     this.scrollController,
