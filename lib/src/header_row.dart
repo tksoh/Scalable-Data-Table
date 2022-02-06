@@ -23,11 +23,16 @@ class ScalableTableHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _HorizontalTable(
-      children: children,
-      columnWrapper: columnWrapper,
-      padding: padding,
-      maxWidth: maxWidth,
+    return SizedBox(
+      width: double.infinity,
+      child: Center(
+        child: _HorizontalTable(
+          children: children,
+          columnWrapper: columnWrapper,
+          padding: padding,
+          maxWidth: maxWidth,
+        ),
+      ),
     );
   }
 }
@@ -60,11 +65,14 @@ class ScalableTableRow extends StatelessWidget {
       onTap: onTap,
       child: Container(
         color: color,
-        child: _HorizontalTable(
-          children: children,
-          columnWrapper: columnWrapper,
-          padding: padding,
-          maxWidth: maxWidth,
+        width: double.infinity,
+        child: Center(
+          child: _HorizontalTable(
+            children: children,
+            columnWrapper: columnWrapper,
+            padding: padding,
+            maxWidth: maxWidth,
+          ),
         ),
       ),
     );
