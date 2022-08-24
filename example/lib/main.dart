@@ -27,14 +27,15 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Scalable Data Table')),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
-              'Scalable Data Table',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              'Table of Users',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
           const Expanded(child: UsersTable()),
