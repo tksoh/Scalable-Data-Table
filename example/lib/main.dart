@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:example/data.dart';
 import 'package:scalable_data_table/scalable_data_table.dart';
 import 'package:intl/intl.dart';
