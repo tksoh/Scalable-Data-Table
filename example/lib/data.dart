@@ -93,11 +93,11 @@ final _random = Random();
 String _createName() => _names[_random.nextInt(_names.length)];
 String _createSurname() => _surnames[_random.nextInt(_surnames.length)];
 
-Future<List<User>> createUsers(bool ascending) {
+Future<List<User>> createUsers(int columnIndex, bool ascending) {
   return Future.delayed(
     const Duration(seconds: 0),
     () {
-      return List.generate(
+      var list = List.generate(
         500,
         (index) => User(
           index: index,
@@ -110,8 +110,35 @@ Future<List<User>> createUsers(bool ascending) {
             (_) => '${_createName()} ${_createSurname()}',
           ),
         ),
-      )..sort((a, b) =>
-          ascending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+      );
+
+      switch (columnIndex) {
+        case 0:
+          list.sort((a, b) => ascending
+              ? a.index.compareTo(b.index)
+              : b.index.compareTo(a.index));
+          break;
+        case 1:
+          list.sort((a, b) => ascending
+              ? a.createdAt.compareTo(b.createdAt)
+              : b.createdAt.compareTo(a.createdAt));
+          break;
+        case 2:
+          list.sort((a, b) =>
+              ascending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+          break;
+        case 3:
+          list.sort((a, b) => ascending
+              ? a.surname.compareTo(b.surname)
+              : b.surname.compareTo(a.surname));
+          break;
+        case 4:
+          list.sort((a, b) => ascending
+              ? a.points.compareTo(b.points)
+              : b.points.compareTo(a.points));
+          break;
+      }
+      return list;
     },
   );
 }

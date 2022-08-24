@@ -55,12 +55,13 @@ class UsersTable extends StatefulWidget {
 }
 
 class _UsersTableState extends State<UsersTable> {
-  bool isSortAscending = false;
+  bool isSortAscending = true;
+  int sortColumnIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<User>>(
-      future: createUsers(isSortAscending),
+      future: createUsers(sortColumnIndex, isSortAscending),
       builder: (context, snapshot) => ScalableDataTable(
         header: DefaultTextStyle(
           style: TextStyle(
@@ -71,27 +72,11 @@ class _UsersTableState extends State<UsersTable> {
           child: ScalableTableHeader(
             columnWrapper: columnWrapper,
             children: [
-              const SizedBox(),
-              const Text('Created At'),
-              GestureDetector(
-                child: Row(
-                  children: [
-                    const Text('Name'),
-                    Icon(isSortAscending
-                        ? Icons.arrow_downward
-                        : Icons.arrow_upward),
-                  ],
-                ),
-                onTap: () {
-                  setState(() {
-                    isSortAscending = !isSortAscending;
-                  });
-                  debugPrint(
-                      'Name column clicked, ascending: $isSortAscending');
-                },
-              ),
-              const Text('Surname'),
-              const Text('Points'),
+              getSortableHeader('##', 0),
+              getSortableHeader('Created At', 1),
+              getSortableHeader('Name', 2),
+              getSortableHeader('Surname', 3),
+              getSortableHeader('Points', 4),
               const Text('Interests'),
             ],
           ),
@@ -123,18 +108,43 @@ class _UsersTableState extends State<UsersTable> {
     );
   }
 
+  Widget getSortableHeader(String title, int columnIndex) {
+    return GestureDetector(
+      child: Row(
+        children: [
+          Text(title),
+          sortColumnIndex == columnIndex
+              ? Icon(
+                  isSortAscending ? Icons.arrow_downward : Icons.arrow_upward)
+              : Icon(Icons.unfold_more, color: Colors.grey.shade400),
+        ],
+      ),
+      onTap: () {
+        setState(() {
+          if (sortColumnIndex != columnIndex) {
+            sortColumnIndex = columnIndex;
+            isSortAscending = true;
+          } else {
+            isSortAscending = !isSortAscending;
+          }
+        });
+        debugPrint('$title column clicked, ascending: $isSortAscending');
+      },
+    );
+  }
+
   Widget columnWrapper(BuildContext context, int columnIndex, Widget child) {
     const padding = EdgeInsets.symmetric(horizontal: 10);
     switch (columnIndex) {
       case 0:
         return Container(
-          width: 60,
+          width: 70,
           padding: padding,
           child: child,
         );
       case 1:
         return Container(
-          width: 100,
+          width: 150,
           padding: padding,
           child: child,
         );
