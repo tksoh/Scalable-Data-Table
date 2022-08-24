@@ -93,22 +93,25 @@ final _random = Random();
 String _createName() => _names[_random.nextInt(_names.length)];
 String _createSurname() => _surnames[_random.nextInt(_surnames.length)];
 
-Future<List<User>> createUsers() {
+Future<List<User>> createUsers(bool ascending) {
   return Future.delayed(
-    const Duration(seconds: 3),
-    () => List.generate(
-      500,
-      (index) => User(
-        index: index,
-        name: _createName(),
-        surname: _createSurname(),
-        createdAt: DateTime.now().subtract(Duration(minutes: index * 30)),
-        points: index * 5,
-        interests: List.generate(
-          _random.nextInt(30),
-          (_) => '${_createName()} ${_createSurname()}',
+    const Duration(seconds: 0),
+    () {
+      return List.generate(
+        500,
+        (index) => User(
+          index: index,
+          name: _createName(),
+          surname: _createSurname(),
+          createdAt: DateTime.now().subtract(Duration(minutes: index * 30)),
+          points: index * 5,
+          interests: List.generate(
+            _random.nextInt(30),
+            (_) => '${_createName()} ${_createSurname()}',
+          ),
         ),
-      ),
-    ),
+      )..sort((a, b) =>
+          ascending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+    },
   );
 }

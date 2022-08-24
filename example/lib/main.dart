@@ -44,15 +44,22 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class UsersTable extends StatelessWidget {
+class UsersTable extends StatefulWidget {
   const UsersTable({Key? key}) : super(key: key);
 
   static final _dateFormat = DateFormat('HH:mm dd/MM');
 
   @override
+  State<UsersTable> createState() => _UsersTableState();
+}
+
+class _UsersTableState extends State<UsersTable> {
+  bool isSortAscending = false;
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<User>>(
-      future: createUsers(),
+      future: createUsers(isSortAscending),
       builder: (context, snapshot) => ScalableDataTable(
         header: DefaultTextStyle(
           style: TextStyle(
@@ -65,7 +72,23 @@ class UsersTable extends StatelessWidget {
             children: [
               const SizedBox(),
               const Text('Created At'),
-              const Text('Name'),
+              GestureDetector(
+                child: Row(
+                  children: [
+                    const Text('Name'),
+                    Icon(isSortAscending
+                        ? Icons.arrow_downward
+                        : Icons.arrow_upward),
+                  ],
+                ),
+                onTap: () {
+                  setState(() {
+                    isSortAscending = !isSortAscending;
+                  });
+                  debugPrint(
+                      'Name column clicked, ascending: $isSortAscending');
+                },
+              ),
               const Text('Surname'),
               const Text('Points'),
               const Text('Interests'),
@@ -73,6 +96,7 @@ class UsersTable extends StatelessWidget {
           ),
         ),
         rowBuilder: (context, index) {
+          debugPrint('rowBuilder: bulding index #$index');
           final user = snapshot.data![index];
           return ScalableTableRow(
             columnWrapper: columnWrapper,
@@ -82,7 +106,7 @@ class UsersTable extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: Text('${user.index}.'),
               ),
-              Text(_dateFormat.format(user.createdAt)),
+              Text(UsersTable._dateFormat.format(user.createdAt)),
               Text(user.name),
               Text(user.surname),
               Text('${user.points} pts'),
