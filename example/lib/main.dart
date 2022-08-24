@@ -114,8 +114,9 @@ class _UsersTableState extends State<UsersTable> {
         children: [
           Text(title),
           sortColumnIndex == columnIndex
-              ? Icon(
-                  isSortAscending ? Icons.arrow_downward : Icons.arrow_upward)
+              ? Icon(isSortAscending
+                  ? Icons.keyboard_double_arrow_down
+                  : Icons.keyboard_double_arrow_up)
               : Icon(Icons.unfold_more, color: Colors.grey.shade400),
         ],
       ),
